@@ -1,25 +1,26 @@
-# Stage 1: Build the application
-FROM maven:3.9.6-eclipse-temurin-17 AS build
+# Stage 1: Build (Optimized for low memory)
+FROM maven:3.9.6-eclipse-temurin-17-alpine AS build
 WORKDIR /app
 
-# Copy the pom.xml and source code
+# Set Maven options to use less memory
+ENV MAVEN_OPTS="-Xmx384m"
+
+# Copy pom first to cache dependencies
 COPY pom.xml .
+RUN mvn dependency:go-offline
+
+# Copy source and build
 COPY src ./src
+RUN mvn clean package -DskipTests -e
 
-# Build the jar file
-RUN mvn clean package -DskipTests
-
-# Stage 2: Run the application
-# Using eclipse-temurin instead of openjdk
-FROM eclipse-temurin:17-jre-jammy
+# Stage 2: Runtime
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
-# Copy the specifically named jar file from the build stage
-# Note: Verified name is ChatAI-0.0.1-SNAPSHOT.jar
-COPY --from=build /app/target/ChatAI-0.0.1-SNAPSHOT.jar app.jar
+# Using a wildcard (*) ensures it finds the jar even if the name varies slightly
+COPY --from=build /app/target/*.jar app.jar
 
-# Expose the port Spring Boot runs on
 EXPOSE 8080
 
-# Start the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Run with memory constraints for the JRE
+ENTRYPOINT ["java", "-Xmx384m", "-Xss512k", "-jar", "app.jar"]
