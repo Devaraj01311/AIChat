@@ -1,4 +1,4 @@
-![image2](https://github.com/user-attachments/assets/b19dfa3d-0b6f-4ee6-a5a2-93132514be98)# AICHAT
+# AICHAT
 
 
 AIChat is an AI-powered conversational web application that allows users to interact with an intelligent chatbot in real time. The system uses advanced Natural Language Processing (NLP) through the Gemini / LLM API to understand user queries and generate human-like responses.
@@ -113,6 +113,12 @@ The application uses a dual-layer security approach:
 Stateful OAuth: Google login is handled server-side, then redirected with a JWT.
 Stateless JWT: All subsequent API calls require a Bearer <token> in the Authorization header.
 CORS: Configured to only allow requests from the specific frontend URL defined in environment variables.
+
+Screenshot:
+
+![image2](https://github.com/user-attachments/assets/b19dfa3d-0b6f-4ee6-a5a2-93132514be98)
+<img width="1358" height="636" alt="aiimage1" src="https://github.com/user-attachments/assets/67a7359d-996c-4b17-bd54-ec6da1583325" />
+
 
 
 📄 License
