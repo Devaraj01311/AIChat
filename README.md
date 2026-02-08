@@ -1,4 +1,6 @@
-**AICHAT**:
+# AICHAT
+
+
 AIChat is an AI-powered conversational web application that allows users to interact with an intelligent chatbot in real time. The system uses advanced Natural Language Processing (NLP) through the Gemini / LLM API to understand user queries and generate human-like responses.
 
 1. Backend (Spring Boot)
